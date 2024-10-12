@@ -80,3 +80,6 @@ jobs:
           git add .
           git commit -m "generated"
           git push
+      
+      - name: Run tests and check coverage
+        run: npm run test -- --coverage --coverageThreshold='{ "global": { "branches": 80, "functions": 80, "lines": 80, "statements": 80 } }'
