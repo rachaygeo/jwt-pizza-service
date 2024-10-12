@@ -9,6 +9,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set_version.outputs.version }}
     services:
       mysql:
         image: mysql:8.0.29
@@ -23,8 +25,6 @@ jobs:
           --health-start-period 10s
           --health-timeout 5s
           --health-retries 10
-    outputs:
-      version: ${{ steps.set_version.outputs.version }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -39,9 +39,6 @@ jobs:
 
       - name: Lint
         run: npm run lint
-
-      - name: Tests
-        run: npm test
 
       - name: Write config file
         run: |
@@ -62,6 +59,9 @@ jobs:
               apiKey: '${{ secrets.FACTORY_API_KEY }}',
             },
           };" > src/config.js
+
+      - name: Tests
+        run: npm test
 
       - name: set version
         id: set_version
