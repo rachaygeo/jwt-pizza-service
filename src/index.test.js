@@ -1,3 +1,14 @@
-test('1 + 1 equals 2', () => {
-    expect(1 + 1).toBe(2);
+const app = require("./service");
+
+test('listen to port', () => {
+    let listenMock = jest.spyOn(app, 'listen').mockImplementation((port, callback) => {
+        callback();
+    });
+
+    console.log = jest.fn();
+    process.argv = ['node', 'index.js'];
+    require('./index');
+
+    expect(listenMock).toHaveBeenCalledWith(4000, expect.any(Function));
+    expect(console.log).toHaveBeenCalledWith('Server started on port 4000');
 });
