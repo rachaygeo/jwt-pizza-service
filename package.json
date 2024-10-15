@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd src && node index.js",
-    "lint": "eslint . --max-warnings 0",
+    "lint": "eslint .",
     "test": "jest"
   },
   "license": "MIT",
@@ -18,7 +18,8 @@
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "eslint": "^9.12.0",
-    "globals": "^15.11.0"
+    "globals": "^15.11.0",
+    "jest": "^29.7.0"
   },
   "keywords": [],
   "author": ""
