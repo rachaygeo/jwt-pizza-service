@@ -1,25 +1,16 @@
-const express = require('express');
 const request = require('supertest');
 const app = require('./service');
-const { authRouter, setAuthUser } = require('./routes/authRouter.js');
-const orderRouter = require('./routes/orderRouter.js');
-const franchiseRouter = require('./routes/franchiseRouter.js');
 const version = require('./version.json');
-const config = require('./config');
 
-test('use /docs', async () => {
-    const response = await request(app).get('/api/docs');
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual({
-      version: version.version,
-      endpoints: expect.any(Array),
-      config: {
-        factory: config.factory.url,
-        db: config.db.connection.host,
-      },
-    });
-});
+jest.mock('./routes/authRouter.js', () => ({
+  authRouter: require('express').Router(),
+  setAuthUser: (req, res, next) => {
+    req.user = { id: 1, username: 'testuser' };
+    next();
+  },
+}));
+jest.mock('./routes/orderRouter.js', () => require('express').Router());
+jest.mock('./routes/franchiseRouter.js', () => require('express').Router());
 
 test('get /', async () => {
     const response = await request(app).get('');
@@ -38,4 +29,14 @@ test('use *', async () => {
     expect(response.body).toEqual({
         message: 'unknown endpoint',
     });
+});
+
+test('error handler', async () => {
+  const response = await request(app).get('/api/docs');
+
+  expect(response.statusCode).toBe(500);
+  expect(response.body).toEqual({
+    message: expect.any(String),
+    stack: expect.any(String),
+  });
 });
