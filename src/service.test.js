@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('./service');
 const version = require('./version.json');
+const config = require('./config.js');
 
 jest.mock('./routes/authRouter.js', () => ({
   authRouter: require('express').Router(),
