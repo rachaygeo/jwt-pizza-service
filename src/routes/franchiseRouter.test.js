@@ -2,7 +2,6 @@ const request = require('supertest');
 const express = require('express');
 const { DB } = require('../database/database.js');
 const franchiseRouter = require('./franchiseRouter');
-const jwt = require('jsonwebtoken');
 
 jest.mock('../database/database.js');
 
@@ -22,7 +21,6 @@ test('getFranchises', async () => {
 test('getUserFranchises', async () => {
   DB.getUserFranchises = jest.fn().mockResolvedValue([{ id: 2, name: 'pizzaPocket' }]);
 
-  const user = { id: 4, isRole: () => true };
   const response = await request(app)
     .get('/api/franchise/4')
     .set('Authorization', `Bearer ttt`);
