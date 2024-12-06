@@ -23,10 +23,9 @@ test('getUserFranchises', async () => {
   DB.getUserFranchises = jest.fn().mockResolvedValue([{ id: 2, name: 'pizzaPocket' }]);
 
   const user = { id: 4, isRole: () => true };
-  const token = jwt.sign(user, jwtSecret, { expiresIn: '1h' });
   const response = await request(app)
     .get('/api/franchise/4')
-    .set('Authorization', `Bearer ${token}`);
+    .set('Authorization', `Bearer ttt`);
 
   expect(response.status).toBe(200);
   expect(response.body).toEqual([{ id: 2, name: 'pizzaPocket' }]);
