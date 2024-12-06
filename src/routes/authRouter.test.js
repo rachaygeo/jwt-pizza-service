@@ -12,8 +12,6 @@ app.use(express.json());
 app.use(setAuthUser);
 app.use('/api/auth', authRouter);
 
-const mockJwtSecret = 'test-secret';
-
 beforeEach(() => {
   jest.resetAllMocks();
 });
