@@ -1,9 +1,9 @@
 const request = require('supertest');
 const express = require('express');
-const { Role, DB } = require('../database/database.js');
-const { authRouter } = require('./authRouter.js');
+const { DB } = require('../database/database.js');
+// const { authRouter } = require('./authRouter.js');
 const orderRouter = require('./orderRouter.js');
-const { asyncHandler, StatusCodeError } = require('../endpointHelper.js');
+// const { asyncHandler, StatusCodeError } = require('../endpointHelper.js');
 
 jest.mock('../database/database.js', () => ({
   DB: {
